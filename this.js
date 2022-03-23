@@ -20,12 +20,14 @@ const innerDiv = function (arr) {
       element.name
     }</span></div>
     <div class="sym">${element.symbol}</div>
-    <div>$${element.current_price}</div>
-    <div>$${element.total_volume}</div>
-    <div class=${element.price_change_percentage_24h > 0 ? "up" : "down"}>${
-      element.price_change_percentage_24h
-    }% ${element.price_change_percentage_24h > 0 ? "👍" : "👎"}</div>
-    <div>Mkt Cap: $${element.market_cap}</div>`;
+    <div>$${element.current_price.toLocaleString("en-US")}</div>
+    <div>$${element.total_volume.toLocaleString("en-US")}</div>
+    <div class=${
+      element.price_change_percentage_24h > 0 ? "up" : "down"
+    }>${element.price_change_percentage_24h.toFixed(2)}% ${
+      element.price_change_percentage_24h > 0 ? "👍" : "👎"
+    }</div>
+    <div>Mkt Cap: $${element.market_cap.toLocaleString("en-US")}</div>`;
     divEL.appendChild(newDiv);
   });
 };
@@ -39,8 +41,6 @@ const getJSON = function () {
     .then((resp) => resp.json())
     .then((data) => {
       let arr = [...data].reverse();
-      console.log(arr);
-      console.log(data);
       if (sort1.value == "asc") {
         return innerDiv(arr);
       } else if (sort1.value == "desc") {
@@ -59,7 +59,7 @@ window.addEventListener("load", getJSON);
 //Search event
 srch.addEventListener("input", function () {
   const inpt = srch.value.toLowerCase();
-  console.log(inpt);
+
   const text = document.getElementsByClassName("nam");
 
   const symb = document.getElementsByClassName("sym");
